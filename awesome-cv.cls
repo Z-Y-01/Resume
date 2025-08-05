@@ -94,6 +94,8 @@
 % Solves issues Warning: File `cv.out' has changed
 \RequirePackage{bookmark}
 
+\RequirePackage{enumerate}
+
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
@@ -159,8 +161,9 @@
 \setbool{acvSectionColorHighlight}{true}
 
 % Awesome section color
-\def\@sectioncolor#1#2#3{%
-  \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
+\def\@sectioncolor#1#2#3#4{%
+  % \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
+  \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2}#3#4}{#1#2#3#4} % 中文语境下通常只有前两个字需要变色
 }
 
 
@@ -177,7 +180,7 @@
   ItalicFont=*-Light, % 斜体，用细体替代
   BoldFont=*-Bold, % 粗体
   BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
-]{WenYuanSansSC}
+]{WenYuanSansSCC}
 
 \newfontfamily\headerfontlight[
   Path=\@fontdir,
@@ -186,7 +189,7 @@
   ItalicFont=*-Light, % 斜体，用细体替代
   BoldFont=*-Bold, % 粗体
   BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
-]{WenYuanSansSC}
+]{WenYuanSansSCC}
 
 \newfontfamily\footerfont[
   Path=\@fontdir,
@@ -195,7 +198,7 @@
   ItalicFont=*-Light, % 斜体，用细体替代
   BoldFont=*-Bold, % 粗体
   BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
-]{WenYuanSansSC}
+]{WenYuanSansSCC}
 
 \newfontfamily\bodyfont[
   Path=\@fontdir,
@@ -204,7 +207,7 @@
   ItalicFont=*-Light, % 斜体，用细体替代
   BoldFont=*-Bold, % 粗体
   BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
-]{WenYuanSansSC}
+]{WenYuanSansSCC}
 
 \newfontfamily\bodyfontlight[
   Path=\@fontdir,
@@ -213,14 +216,14 @@
   ItalicFont=*-Light, % 斜体，用细体替代
   BoldFont=*-Bold, % 粗体
   BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
-]{WenYuanSansSC}
+]{WenYuanSansSCC}
 
 %-------------------------------------------------------------------------------
 %                Configuration for styles
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{graytext} #1}}
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\bfseries\color{text} #1}}
 \newcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{awesome} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
@@ -525,7 +528,8 @@
   \end{minipage}
   \begin{minipage}[c]{\headertextwidth}
     \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
-    \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
+    % \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
+    \headerfirstnamestyle{\@firstname}\headerlastnamestyle{\@lastname}% 中文不需要空格,且格式一致
     \\[\acvHeaderAfterNameSkip]%
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
     \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
@@ -736,9 +740,7 @@
       {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
       {\entrytitlestyle{#2} & \entrylocationstyle{#3} \\
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
-    \ifstrempty{#5}
-      {}
-      {\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}} \\}
+    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}} \\
   \end{tabular*}%
 }
 
@@ -815,6 +817,16 @@
   \vspace{1.0mm}
 }
 
+\newenvironment{cvsubitems}{%
+  \begin{justify}
+  \begin{itemize}[leftmargin=4ex, nosep, noitemsep]
+    \setlength{\parskip}{0pt}
+    \renewcommand{\labelitemi}{--}
+}{%
+  \end{itemize}
+  \end{justify}
+}
+
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
@@ -859,7 +871,7 @@
 \newcommand*{\makeletterclosing}{%
   \vspace{3.4mm}
   \lettertextstyle{\@letterclosing} \\\\
-  \letternamestyle{\@firstname\ \@lastname}
+  \letternamestyle{\@firstname\\@lastname}
   \ifthenelse{\isundefined{\@letterenclosure}}
     {\\}
     {%
