@@ -75,8 +75,9 @@
 % Needed to manage math fonts
 \RequirePackage{unicode-math}
 % Needed to use icons from font-awesome
-\RequirePackage{fontawesome6}
-\RequirePackage{roboto}
+% \RequirePackage{fontawesome6}
+\RequirePackage{Fontawesome}
+% \RequirePackage{roboto} 中文用不了
 \RequirePackage[default,opentype]{sourcesanspro}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
@@ -98,7 +99,10 @@
 %-------------------------------------------------------------------------------
 % Configure an optional directory location for fonts(default: 'fonts/')
 % Not required anymore but left in place for backward compatability.
+% 为字体配置目录位置 (default: 'fonts/')
 \newcommand*{\fontdir}[1][fonts/]{\def\@fontdir{#1}}
+
+\fontdir[fonts/]
 
 %-------------------------------------------------------------------------------
 %                Configuration for layout
@@ -163,11 +167,53 @@
 %-------------------------------------------------------------------------------
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
-\newcommand*{\headerfont}{\roboto}
-\newcommand*{\headerfontlight}{\robotolight}
-\newcommand*{\footerfont}{\sourcesanspro}
-\newcommand*{\bodyfont}{\sourcesanspro}
-\newcommand*{\bodyfontlight}{\sourcesansprolight}
+
+\setfontfamily\FA[Path=\@fontdir]{FontAwesome}
+
+\newfontfamily\headerfont[
+  Path=\@fontdir,
+  Extension=.ttf, % 字体扩展名
+  UprightFont=*-Regular, % 常规体
+  ItalicFont=*-Light, % 斜体，用细体替代
+  BoldFont=*-Bold, % 粗体
+  BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
+]{WenYuanSansSC}
+
+\newfontfamily\headerfontlight[
+  Path=\@fontdir,
+  Extension=.ttf, % 字体扩展名
+  UprightFont=*-Regular, % 常规体
+  ItalicFont=*-Light, % 斜体，用细体替代
+  BoldFont=*-Bold, % 粗体
+  BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
+]{WenYuanSansSC}
+
+\newfontfamily\footerfont[
+  Path=\@fontdir,
+  Extension=.ttf, % 字体扩展名
+  UprightFont=*-Regular, % 常规体
+  ItalicFont=*-Light, % 斜体，用细体替代
+  BoldFont=*-Bold, % 粗体
+  BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
+]{WenYuanSansSC}
+
+\newfontfamily\bodyfont[
+  Path=\@fontdir,
+  Extension=.ttf, % 字体扩展名
+  UprightFont=*-Regular, % 常规体
+  ItalicFont=*-Light, % 斜体，用细体替代
+  BoldFont=*-Bold, % 粗体
+  BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
+]{WenYuanSansSC}
+
+\newfontfamily\bodyfontlight[
+  Path=\@fontdir,
+  Extension=.ttf, % 字体扩展名
+  UprightFont=*-Regular, % 常规体
+  ItalicFont=*-Light, % 斜体，用细体替代
+  BoldFont=*-Bold, % 粗体
+  BoldItalicFont=*-Medium, % 粗斜体（用中粗体替代）
+]{WenYuanSansSC}
 
 %-------------------------------------------------------------------------------
 %                Configuration for styles
